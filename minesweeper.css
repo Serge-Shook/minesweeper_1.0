@@ -1,0 +1,411 @@
+@font-face {
+    font-family: Roboto;
+    src: url(fonts/Roboto-Regular.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(fonts/Roboto-Bold.ttf);
+    font-weight: bold;
+}
+
+body {
+    overflow: hidden;
+    font-family: Roboto, sans-serif;
+}
+
+p {
+    margin: 0;
+}
+
+#minesweeper {
+    position: relative;
+    background-color: #ccc;
+    padding: 8px 6px 6px 6px;
+    display: inline-block;
+}
+
+#minefield {
+    font-family: Arial, Roboto, sans-serif;
+}
+
+#infobar {
+    border: 2px solid #808080;
+    border-right-color: white;
+    border-bottom-color: white;
+    padding: 0 0.3em;
+    margin-bottom: 0.5em;
+    cursor: grab;
+    font-size: 110%;
+}
+
+#current-difficulty {
+    font-size: 70%;
+    text-align: center;
+    text-transform: capitalize;
+    margin: -0.8em auto 0 auto;
+    padding: 0 0.4em;
+    background-color: #ccc;
+    width: max-content;
+}
+
+#infobar > div {
+    display: flex;
+}
+
+#infobar > div > div {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#mines-left {
+    font-weight: bold;
+    color: red;
+}
+
+#mines-left, #timer {
+    margin-top: -0.3em;
+}
+
+#reset, #difficulty {
+    padding: 0.1em;
+    border: 1px solid grey;
+    border-radius: 4px;
+    margin: 0.1em;
+    width: 1.1em;
+    height: 1.1em;
+    cursor: pointer;
+    background-color: #e8e8e8;
+}
+
+#reset:hover, #difficulty:hover {
+    border-color: #007cde;
+    /* color: #002b88; */
+    background-color: #E7F4FF;
+    box-shadow: 0 0 0.15em 0 #002b88;
+}
+
+#reset-time {
+    position: relative;
+}
+
+#mines-settings {
+    position: relative;
+}
+
+#difficulty-menu {
+    position: absolute;
+    top: 1em;
+    left: -1.7em;
+    text-align: left;
+    list-style-type: none;
+    font-size: 88%;
+    padding: 0;
+    background-color: #ccc;
+    border: 1px dotted black;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+#difficulty-menu li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.07em 0.3em 0.07em 0.5em;
+}
+
+#difficulty-menu li:hover {
+    background-color: #808080;
+}
+
+#difficulty-menu li img {
+    color: black;
+    width: 1.25em;
+    height: 1.25em;
+    margin-left: 0.5em;
+    background-color: #f6f6f6;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+#difficulty-menu li img:hover {
+    border-color: #007cde;
+    background-color: #E7F4FF;
+    box-shadow: 0 0 0.15em 0 #007cde;
+}
+
+li.selected {
+    font-weight: bold;
+}
+
+#king {
+    color: purple;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#minesweeper table {
+    border-spacing: 0;
+    border: 2px solid #808080;
+    border-right-color: white;
+    border-bottom-color: white;
+}
+
+#minefield td {
+    height: 21px;
+    width: 21px;
+    padding: 0;
+    border: 2px solid white;
+    border-right-color: #808080;
+    border-bottom-color: #808080;
+    text-align: center;
+    background-color: #c0c0c0;
+    font-size: 95%;
+}
+
+#minefield td.opened {
+    height: 24px;
+    width: 24px;
+    border: 1px solid #808080;
+    border-right: none;
+    border-bottom: none;
+    font-size: 115%;
+    font-weight: bold;
+}
+
+#minefield td.questioned {
+    font-weight: bold;
+    font-size: 110%;
+}
+
+#minefield td.one {
+    color: blue;
+}
+
+#minefield td.two {
+    color: green;
+}
+
+#minefield td.three {
+    color: red;
+}
+
+#minefield td.four {
+    color: navy;
+}
+
+#minefield td.five {
+    color: maroon;
+}
+
+#minefield td.six {
+    color: teal;
+}
+
+#minefield td.eight {
+    color: gray;
+}
+
+#minefield td.bomb {
+    font-size: 100%;
+    vertical-align: initial;
+}
+
+#minefield td.redCross::before {
+    position: absolute;
+    margin: 0.12em 0 0 0.25em;
+    font-size: 110%;
+    content: 'X';
+    color: red;
+}
+
+#alertBackground {
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(128, 128, 128, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+
+#thin-cover, #king-cover {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#king-cover {
+    z-index: 1;
+}
+
+#king-menu {
+    position: absolute;
+    background-color: #ccc;
+    border: 1px dotted black;
+    border-radius: 5px;
+    z-index: 2;
+    left: -27px;
+    top: 0;
+    font-size: 88%;
+    min-width: 150px;
+    padding: 0.2em 0.4em;
+}
+
+#king-menu-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.2em;
+}
+
+#king-menu img {
+    margin: 0.05em;
+    padding: 0.05em;
+}
+
+#king-menu img:hover {
+    background-color: #f6f6f6;
+    border-radius: 4px;
+    box-shadow: 0 0 0.2em 0 #007cde;
+}
+
+.final-message {
+    width: 300px;
+    min-height: 200px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    background-color: #eee;
+    position: fixed;
+    top: calc(45vh - 100px);
+    left: calc(50vw - 150px);
+    padding: 0.2em 0.4em;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+.final-message img {
+    display: block;
+    margin: auto;
+}
+
+#kingMessage {
+    width: 350px;
+}
+
+#lostMessage {
+    padding-top: 1.8em;
+}
+
+.final-message h1 {
+    font-size: 250%;
+    margin: 0.1em 0 0.25em 0;
+    text-align: center;
+}
+
+.final-message p {
+    margin: 0.3em 0;
+}
+
+#record {
+    padding: 0.15em 0.4em;
+    border: 1px dotted black;
+    border-radius: 5px;
+    font-size: 190%;
+    font-weight: bold;
+    margin: 0.2em auto;
+    background-color: #f6f6f6;
+    width: max-content;
+}
+
+.click-me#record:hover {
+    border-color: #007cde;
+    box-shadow: 0 0 0.15em 0 #007cde;
+    cursor: pointer;
+}
+
+.final-message form {
+    margin: 0.4em 0;
+}
+
+.final-message form input {
+    margin: 0.1em;
+}
+
+#error {
+    margin-top: 1em;
+    text-align: center;
+    font-weight: bold;
+}
+
+#kingMessage table {
+    border-collapse: collapse;
+    width: calc(100% - 0.6em);
+    margin: 0.3em;
+}
+
+#kingMessage td, #kingMessage th {
+    border: 1px dotted gray;
+    padding: 0.1em 0.25em;
+}
+
+#kingMessage tbody td, #kingMessage tbody th {
+    text-align: right;
+}
+
+#kingMessage tbody th {
+    font-weight: normal;
+    text-align: left;
+    padding: 0.1em 0.4em;
+}
+
+#table-of-records, #best-king-lost, #best-king-win {
+    min-width: 600px;
+    min-height: 30vh;
+    top: 5em;
+    left: calc(100vw / 2 - 300px);
+    padding: 0.5em;
+}
+
+#table-of-records table, #best-king-lost table, #best-king-win table {
+    border-collapse: collapse;
+}
+
+#table-of-records table td, #best-king-lost table td, #best-king-win table td {
+    border: 1px dotted gray;
+    padding: 0.1em 0.3em;
+    text-align: right;
+}
+
+#table-of-records table td.name {
+    text-align: left;
+}
+
+#ok {
+    border: 2px solid gray;
+    padding: 0.2em 1em;
+    width: 2em;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    cursor: pointer;
+}
+
+#ok:hover {
+    border-color: #007cde;
+    box-shadow: 0 0 0.15em 0 #007cde;
+}
+
+/* #lostMessage #ok {
+    margin-top: 1.5em;
+} */
+
+#faq-message {
+    width: 600px;
+    left: calc(100vw / 2 - 300px);
+}
